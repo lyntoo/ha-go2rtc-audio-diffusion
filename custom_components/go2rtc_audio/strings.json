@@ -1,0 +1,115 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "go2rtc Audio Diffusion",
+        "description": "Dedicated go2rtc instance, independent from Frigate, to broadcast audio on your two-way audio cameras.",
+        "data": {
+          "api_port": "go2rtc API port (dedicated)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "go2rtc Audio Diffusion — Cameras",
+        "description": "Currently configured cameras: {cameras}",
+        "menu_options": {
+          "add_camera": "Add a camera",
+          "remove_camera": "Remove camera(s)"
+        }
+      },
+      "add_camera": {
+        "title": "Add a camera",
+        "description": "{found_cameras}\n\nPick an existing camera for automatic detection (Reolink confirmed; Hikvision/Dahua/Amcrest best-effort, untested), OR pick the brand yourself with the address found above, OR fill the custom URL.",
+        "data": {
+          "name": "Name (e.g. reofront)",
+          "camera_entity": "Existing camera (optional, pre-fills the address if possible)",
+          "brand_choice": "Brand (pick it yourself if automatic detection fails, e.g. camera via Frigate)",
+          "host": "Address (IP or hostname) — if brand picked",
+          "username": "Username (if brand picked)",
+          "password": "Password (if brand picked)",
+          "stream_url": "Main RTSP stream URL (rtsp://user:pass@ip/...)",
+          "backchannel": "Enable two-way audio (#backchannel=1) — custom URL only"
+        },
+        "data_description": {
+          "camera_entity": "Leave empty to use the custom URL below instead.",
+          "stream_url": "Only used if no camera is selected above."
+        }
+      },
+      "remove_camera": {
+        "title": "Remove camera(s)",
+        "data": {
+          "names": "Cameras to remove"
+        }
+      }
+    },
+    "abort": {
+      "no_cameras": "No cameras configured."
+    },
+    "error": {
+      "brand_not_recognized": "Brand not auto-detected (e.g. camera exposed via Frigate) — pick the brand yourself from the list, or use the custom URL.",
+      "password_required": "Password is required to build the URL automatically.",
+      "host_required": "Address (IP/hostname) is required — automatic pre-fill isn't possible for this camera, enter it yourself.",
+      "need_entity_or_url": "Pick an existing camera OR fill the custom URL."
+    }
+  },
+  "entity": {
+    "button": {
+      "play_radio": {"name": "Play radio"},
+      "play_message": {"name": "Play message"},
+      "stop": {"name": "Stop"}
+    },
+    "text": {
+      "radio_url": {"name": "Radio URL"},
+      "message": {"name": "TTS message"}
+    },
+    "select": {
+      "tts_engine": {"name": "TTS engine"},
+      "tts_voice": {"name": "TTS voice"}
+    },
+    "binary_sensor": {
+      "diffusion_active": {"name": "Diffusion active"}
+    }
+  },
+  "services": {
+    "diffuser": {
+      "name": "Broadcast audio to camera",
+      "description": "Broadcasts a TTS message, an audio file, or a live radio stream to a two-way audio camera.",
+      "fields": {
+        "camera": {
+          "name": "Camera",
+          "description": "Camera name as added in the integration configuration."
+        },
+        "radio_url": {
+          "name": "Live radio stream (URL)",
+          "description": "URL of a radio/live stream to broadcast continuously."
+        },
+        "message": {
+          "name": "Message to say (TTS)",
+          "description": "Text to convert to speech and broadcast."
+        },
+        "moteur_tts": {
+          "name": "TTS engine",
+          "description": "Engine to use with \"Message to say\" (default Piper). Lists all installed TTS engines."
+        },
+        "voice": {
+          "name": "Voice (optional)",
+          "description": "Exact voice identifier (voice_id) to use, if the chosen engine supports several. Leave empty for the engine's default voice. To find available voices, use the \"TTS voice\" selector on the integration page for the camera in question."
+        },
+        "media_file": {
+          "name": "Server audio file",
+          "description": "Pick an audio file already present in the Home Assistant media library."
+        },
+        "upload_file": {
+          "name": "Upload an audio file",
+          "description": "Send an audio file directly from your computer or phone."
+        }
+      }
+    }
+  }
+}

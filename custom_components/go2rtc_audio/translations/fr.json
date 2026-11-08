@@ -1,0 +1,115 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "go2rtc Audio Diffusion",
+        "description": "Instance go2rtc dédiée, indépendante de Frigate, pour diffuser du son sur vos caméras à audio bidirectionnel.",
+        "data": {
+          "api_port": "Port API go2rtc (dédié)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "go2rtc Audio Diffusion — Caméras",
+        "description": "Caméras configurées actuellement : {cameras}",
+        "menu_options": {
+          "add_camera": "Ajouter une caméra",
+          "remove_camera": "Retirer une/des caméra(s)"
+        }
+      },
+      "add_camera": {
+        "title": "Ajouter une caméra",
+        "description": "{found_cameras}\n\nChoisis une caméra existante pour une détection automatique (Reolink confirmé ; Hikvision/Dahua/Amcrest en best-effort, non testé), OU choisis la marque toi-même avec l'adresse trouvée ci-dessus, OU remplis l'URL personnalisée.",
+        "data": {
+          "name": "Nom (ex: reofront)",
+          "camera_entity": "Caméra existante (optionnel, pré-remplit l'adresse si possible)",
+          "brand_choice": "Marque (choisis-la toi-même si la détection automatique échoue, ex: caméra via Frigate)",
+          "host": "Adresse (IP ou nom d'hôte) — si marque choisie",
+          "username": "Nom d'utilisateur (si marque choisie)",
+          "password": "Mot de passe (si marque choisie)",
+          "stream_url": "URL du flux RTSP main stream (rtsp://user:pass@ip/...)",
+          "backchannel": "Activer l'audio bidirectionnel (#backchannel=1) — URL personnalisée seulement"
+        },
+        "data_description": {
+          "camera_entity": "Laisse vide pour utiliser l'URL personnalisée ci-dessous à la place.",
+          "stream_url": "Utilisée seulement si aucune caméra n'est sélectionnée ci-dessus."
+        }
+      },
+      "remove_camera": {
+        "title": "Retirer une/des caméra(s)",
+        "data": {
+          "names": "Caméras à retirer"
+        }
+      }
+    },
+    "abort": {
+      "no_cameras": "Aucune caméra configurée."
+    },
+    "error": {
+      "brand_not_recognized": "Marque non reconnue automatiquement (ex: caméra exposée via Frigate) — choisis la marque toi-même dans la liste, ou utilise l'URL personnalisée.",
+      "password_required": "Le mot de passe est requis pour construire l'URL automatiquement.",
+      "host_required": "L'adresse (IP/nom d'hôte) est requise — pré-remplissage automatique impossible pour cette caméra, entre-la toi-même.",
+      "need_entity_or_url": "Choisis une caméra existante OU remplis l'URL personnalisée."
+    }
+  },
+  "entity": {
+    "button": {
+      "play_radio": {"name": "Diffuser radio"},
+      "play_message": {"name": "Diffuser message"},
+      "stop": {"name": "Stop"}
+    },
+    "text": {
+      "radio_url": {"name": "URL radio"},
+      "message": {"name": "Message TTS"}
+    },
+    "select": {
+      "tts_engine": {"name": "Moteur TTS"},
+      "tts_voice": {"name": "Voix TTS"}
+    },
+    "binary_sensor": {
+      "diffusion_active": {"name": "Diffusion en cours"}
+    }
+  },
+  "services": {
+    "diffuser": {
+      "name": "Diffuser audio sur caméra",
+      "description": "Diffuse un message TTS, un fichier audio ou un flux radio live sur une caméra à audio bidirectionnel.",
+      "fields": {
+        "camera": {
+          "name": "Caméra",
+          "description": "Nom de la caméra tel qu'ajouté dans la configuration de l'intégration."
+        },
+        "radio_url": {
+          "name": "Flux radio live (URL)",
+          "description": "URL d'un flux radio/live à diffuser en continu."
+        },
+        "message": {
+          "name": "Message à dire (TTS)",
+          "description": "Texte à convertir en parole et diffuser."
+        },
+        "moteur_tts": {
+          "name": "Moteur TTS",
+          "description": "Moteur à utiliser avec « Message à dire » (par défaut Piper). Liste tous les moteurs TTS installés."
+        },
+        "voice": {
+          "name": "Voix (optionnel)",
+          "description": "Identifiant exact de la voix à utiliser (voice_id), si le moteur choisi en supporte plusieurs. Laisser vide pour la voix par défaut du moteur. Pour trouver la liste des voix disponibles, utiliser le sélecteur « Voix TTS » sur la page de l'intégration pour la caméra concernée."
+        },
+        "media_file": {
+          "name": "Fichier audio du serveur",
+          "description": "Choisir un fichier audio déjà présent dans la médiathèque Home Assistant."
+        },
+        "upload_file": {
+          "name": "Téléverser un fichier audio",
+          "description": "Envoyer un fichier audio directement depuis votre ordinateur ou téléphone."
+        }
+      }
+    }
+  }
+}

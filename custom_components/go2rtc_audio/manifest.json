@@ -1,0 +1,12 @@
+{
+  "domain": "go2rtc_audio",
+  "name": "go2rtc Audio Diffusion",
+  "codeowners": ["@lyntoo"],
+  "config_flow": true,
+  "dependencies": ["tts", "media_source", "file_upload"],
+  "documentation": "https://github.com/lyntoo/ha-go2rtc-audio-diffusion",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/lyntoo/ha-go2rtc-audio-diffusion/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

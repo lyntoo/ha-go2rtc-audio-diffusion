@@ -1,0 +1,30 @@
+diffuser:
+  fields:
+    camera:
+      required: true
+      example: reofront
+      selector:
+        text:
+    radio_url:
+      selector:
+        text:
+    message:
+      selector:
+        text:
+          multiline: true
+    moteur_tts:
+      selector:
+        entity:
+          domain: tts
+    voice:
+      selector:
+        text:
+    media_file:
+      selector:
+        media:
+          accept:
+            - audio/*
+    upload_file:
+      selector:
+        file:
+          accept: audio/*
